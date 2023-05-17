@@ -1,0 +1,54 @@
+﻿@model ProductDetailViewModel
+
+
+
+@{
+    ViewData["title"] = Model.ArticleNumber;
+}
+
+
+
+
+<style>
+        .description-placeholder {
+                min-height: 200px; /* Adjust the height as needed */
+
+    }
+</style>
+
+<!-- FIXA ANNAN STYLING -->
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex">
+                <div>
+                    @if (string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="~/images/placeholders/placeholder.png" alt="Placeholder Image" height="400" width="400" />
+                    }
+                    else
+                    {
+                        <img src="~/images/products/@Model.ImageUrl" alt="@Model.Name" height="400" width="400" />
+                    }
+                </div>
+                <div class="ms-4">
+                    <div class="text-extra-light-gray font-sm">@Model.ArticleNumber</div>
+                    <h1 class="mt-2">@Model.Name</h1>
+                    @if (!string.IsNullOrEmpty(Model.Description))
+                    {
+                        <div class="mt-4">@Model.Description</div>
+                    }
+                    else
+                    {
+                        <div class="mt-4 description-placeholder">No description available</div>
+                    }
+                    <div class="mt-auto pt-4">
+                        <hr />
+                        <div class="text-bold">Price: @((Model.Price.HasValue) ? $"{Model.Price.Value.ToString("0.00")} $" : "N/A")</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
