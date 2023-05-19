@@ -1,4 +1,5 @@
-﻿using OskarLAspNet.Helpers.Repos;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using OskarLAspNet.Helpers.Repos;
 using OskarLAspNet.Models.Dtos;
 using OskarLAspNet.Models.Entities;
 using OskarLAspNet.Models.ViewModels;
@@ -63,6 +64,33 @@ namespace OskarLAspNet.Helpers.Services
             return list;
         }
         #endregion
+
+
+
+        //TEST
+
+        public async Task<List<SelectListItem>> GetCategorySelectListAsync()
+        {
+            var categories = await _productCategoryRepo.GetAllAsync();
+
+            return categories.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.CategoryName
+            }).ToList();
+        }
+
+
+        public async Task AssociateProductWithCategoryAsync(ProductEntity product, int categoryId)
+        {
+            var category = await _productCategoryRepo.GetAsync(categoryId);
+            if (category != null)
+            {
+                product.ProductCategory = category;
+            }
+        }
+
+
 
 
         //lägg till update + delete, ta från tagservice.

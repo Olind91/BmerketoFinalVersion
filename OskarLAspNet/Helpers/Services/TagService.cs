@@ -27,6 +27,9 @@ namespace OskarLAspNet.Helpers.Services
             return result;
         }
 
+        //TEST
+       
+
         //Runt 1 timme in i föreläsning 10
         public async Task<Tag> CreateTagAsync(TagRegVM viewModel)
         {
@@ -37,14 +40,18 @@ namespace OskarLAspNet.Helpers.Services
         #endregion
 
         #region Get
-        public async Task<Tag> GetTagAsync(string tagName)
-        {
-            var result = await _tagRepo.GetAsync(x => x.TagName == tagName);
-            return result;
+         public async Task<Tag> GetTagAsync(string tagName)
+         {
+             var result = await _tagRepo.GetAsync(x => x.TagName == tagName);
+             return result;
 
 
-            //1:40:50 f.10. lägger till get med schema också.
-        }
+
+         }
+
+
+
+
         #endregion
 
 

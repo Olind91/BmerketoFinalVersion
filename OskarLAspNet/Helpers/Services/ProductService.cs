@@ -38,42 +38,51 @@ namespace OskarLAspNet.Helpers.Services
             return null!;
         }
 
-        public async Task<Product> CreateProductAsync(ProductRegVM viewmodel)
+        
+
+        //TEST - BEHÖVS INTE ENS!?
+        public async Task<Product> CreateProductAsync(ProductRegVM viewModel)
         {
-            ProductEntity entity = viewmodel;
+            ProductEntity entity = viewModel;
 
 
-            //2:29:00 f.10. kollar så att kategorin finns innan produkt skapas.
-            if (await _productCategoryService.GetCategoryAsync(entity.ProductCategoryId) != null)
-            {
-                entity = await _productRepo.AddAsync(entity);
-                if (entity != null)
+
+                if (int.TryParse(viewModel.SelectedCategory, out int parsedCategoryId))
                 {
-
-                    //Lägg till taggar
-                    foreach (var tagName in viewmodel.Tags)
-                    {
-                        var tag = await _tagService.GetTagAsync(tagName);
-
-                        //finns inte tag, skapar tag
-                        tag ??= await _tagService.CreateTagAsync(tagName);
-
-
-                        //kopplar ihop
-                        await _productTagRepo.AddAsync(new ProductTagEntity
-                        {
-                            ArticleNumber = entity.ArticleNumber,
-                            TagId = tag.Id,
-                        });
-                    }
-                    return await GetProductAsync(entity.ArticleNumber);
+                    await _productCategoryService.AssociateProductWithCategoryAsync(entity, parsedCategoryId);
                 }
+                else
+                {
+                    // Handle the case where the categoryId is not a valid integer
+                    // You can choose to log an error, skip the category, or throw an exception
+                }
+
+
+            // Create the product
+            entity = await _productRepo.AddAsync(entity);
+
+            if (entity != null)
+            {
+                // Add tags to the product (if applicable)
+                foreach (var tagName in viewModel.Tags)
+                {
+                    var tag = await _tagService.GetTagAsync(tagName);
+                    tag ??= await _tagService.CreateTagAsync(tagName);
+
+                    await _productTagRepo.AddAsync(new ProductTagEntity
+                    {
+                        ArticleNumber = entity.ArticleNumber,
+                        TagId = tag.Id,
+                    });
+                }
+
+                return await GetProductAsync(entity.ArticleNumber);
             }
             return null!;
         }
-
-        
         #endregion
+
+
 
         public async Task<IEnumerable<ProductEntity>> GetAllAsync()
         {
@@ -157,11 +166,20 @@ namespace OskarLAspNet.Helpers.Services
                 });
             }
         }
+        
+
+
+
+
+
+
 
         public async Task<Product> GetByArticleNumberAsync(string articleNumber)
         {
             return await _productRepo.GetAsync(x => x.ArticleNumber == articleNumber);
         }
+
+
 
     }
 }

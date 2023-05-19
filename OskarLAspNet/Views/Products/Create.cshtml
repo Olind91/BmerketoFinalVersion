@@ -32,11 +32,18 @@
             <span asp-validation-for="ProductDescription" class="small text-danger"></span>
         </div>
 
+
         <div class="mb-3">
-            <label asp-for="CategoryID" class="form-label">Category ID</label>
-            <input asp-for="CategoryID" class="form-control" />
-            <span asp-validation-for="CategoryID" class="small text-danger"></span>
+            <label asp-for="SelectedCategory" class="form-label">Category</label>
+            <select asp-for="SelectedCategory" asp-items="ViewBag.CategorySelectList" class="form-control"></select>
+            <span asp-validation-for="SelectedCategory" class="small text-danger"></span>
         </div>
+
+
+        
+        
+
+       
 
 
         <div class="mb-5">

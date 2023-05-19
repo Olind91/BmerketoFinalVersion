@@ -20,7 +20,7 @@ namespace OskarLAspNet.Controllers
         public IActionResult Index()
         {
             //Ändra nummer beroende på Tag. 1 = new. 2 = featured. 3 = popular
-            var products = _productService.GetProductsByTagId(18);
+            var products = _productService.GetProductsByTagId(1);
 
             return View(products);
         }

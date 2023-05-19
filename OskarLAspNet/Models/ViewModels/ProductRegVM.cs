@@ -11,13 +11,17 @@ namespace OskarLAspNet.Models.ViewModels
         public string? ProductDescription { get; set; }
         public decimal? Price { get; set; }
 
+        //public List<string> SelectedCategories { get; set; }
+        public string? SelectedCategory { get; set; }
+
+
         [DataType(DataType.Upload)]
         public IFormFile? Image { get; set; }
 
                
         public List<string> Tags { get; set; } = new List<string>();
 
-        public int CategoryID { get; set; }
+        //public int CategoryID { get; set; }
 
 
 
@@ -31,14 +35,19 @@ namespace OskarLAspNet.Models.ViewModels
                 ProductName = viewModel.ProductName,
                 ProductDescription = viewModel.ProductDescription,
                 Price = viewModel.Price,
-                ProductCategoryId = viewModel.CategoryID
+                ProductCategoryId = int.TryParse(viewModel.SelectedCategory, out int categoryId) ? categoryId : 0,
 
                 //ProductTags = (ICollection<ProductTagEntity>)viewModel.Tags,
+
+               
             };
 
             if (viewModel.Image != null)
 
                 entity.ImageUrl = $"{Guid.NewGuid}_{viewModel.Image?.FileName}";
+
+
+            
 
             return entity;
 

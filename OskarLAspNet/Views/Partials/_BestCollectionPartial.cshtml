@@ -20,12 +20,7 @@
             <li class="category-item">Beaty</li>
         </ul>
 
-        <div class="collection-grid">
-            
-
-            
-
-
+        <div class="collection-grid">        
             @foreach (var product in Model)
             {
                 {
@@ -35,7 +30,16 @@
                         <!-- collection-item start -->
                         <a href="/products/@product.ArticleNumber" class="collection-item">
 
-                            <img src="~/images/products/@product.ImageUrl" alt="@product.ProductName" height="50" width="50">
+                           
+
+                            @if (!string.IsNullOrEmpty(product.ImageUrl))
+                            {
+                                <img src="~/images/products/@product.ImageUrl" alt="@product.ProductName" style="height:295px; width:270px;">
+                            }
+                            else
+                            {
+                                <img src="~/images/placeholders/270x295.svg" alt="Image Not available :(" style="height:295px; width:270px;">
+                            }                            
                             <div class="body">
                                 <div class="title">@product.ProductName</div>
                                 <div class="info">

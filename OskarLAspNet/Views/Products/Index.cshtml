@@ -1,9 +1,5 @@
 ﻿
 @model IEnumerable<ProductEntity>
-
-
-
-
 @{
     ViewData["Title"] = "Products";
 }
@@ -23,19 +19,22 @@
                     <div class="collection-grid">
 
                         <!-- collection-item start -->
-                        <a href="/products/@product.ArticleNumber" class="collection-item">
-                            <img src="/images/products/@product.ImageUrl" alt="@product.ProductName" height="100" width="100">
+                        <a href="/products/@product.ArticleNumber" class="collection-item">                            
+                            @if (!string.IsNullOrEmpty(product.ImageUrl))
+                            {
+                                <img src="~/images/products/@product.ImageUrl" alt="@product.ProductName" style="height:295px; width:270px;">
+                            }
+                            else
+                            {
+                                <img src="~/images/placeholders/270x295.svg" alt="Image Not available :(" style="height:295px; width:270px;">
+                            }                        
                             <div class="body">
                                 <div class="title">@product.ProductName</div>
                                 <div class="info">
                                     @product.ProductDescription
                                     <i class="add-cart fa-regular fa-cart-plus"></i>
                                 </div>
-                                <div class="price">@product.Price$</div>
-                                   
-                                
-                                
-
+                                <div class="price">@product.Price$</div>                              
                             </div>
                         </a>
                     </div>

@@ -32,6 +32,7 @@ namespace OskarLAspNet.Controllers
 
                     //201
                     return Created("", tag);
+                RedirectToAction("/");
             }
 
             return View();
