@@ -3,43 +3,46 @@
 
 <div class="container">
     <div class="row">
-    @foreach (var user in Model)
-    {
-        <div class="col-md-4 mt-5">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Firstname: @user.FirstName</h5>
-                    <div>Lastname: @user.LastName</div>
-                    <div>Companyname: @user.CompanyName</div>
-                    <div>@user.ImageUrl</div>
-                    <div>Email: @user.Email</div>
+        @foreach (var user in Model)
+        {
+            <div class="col-md-4 mt-5">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Firstname: @user.FirstName</h5>
+                        <div>Lastname: @user.LastName</div>
+                        <div>Companyname: @user.CompanyName</div>
+                        <div>@user.ImageUrl</div>
+                        <div>Email: @user.Email</div>
 
-                    <h6>Roles:</h6>
-                    <ul>
-                        @if (User?.Identity?.IsAuthenticated == true)
-                        {
-                            var roles = await UserManager.GetRolesAsync(user);
-                            foreach (var role in roles)
+                        <h6>Roles:</h6>
+                        <ul>
+                            @if (User?.Identity?.IsAuthenticated == true)
                             {
-                                <li>@role</li>
+                                var roles = await UserManager.GetRolesAsync(user);
+                                foreach (var role in roles)
+                                {
+                                    <li>@role</li>
+                                }
                             }
-                        }
-                    </ul>
+                        </ul>
 
-                    <div class="buttons">
-                        <a class="link btn btn-danger" asp-controller="Admin" asp-action="Index">Delete user</a>
-                        <a class="link btn btn-success" asp-controller="Admin" asp-action="Index">Update user</a>
+                        <div class="buttons">
+                            <a class="link btn btn-danger" asp-controller="Admin" asp-action="DeleteUser" asp-route-userId="@user.Id">Delete user</a>
+                            <a class="link btn btn-success" asp-controller="Admin" asp-action="UpdateUser" asp-route-userId="@user.Id">Update user</a>
+                            <form asp-controller="Admin" asp-action="ChangeUserRole" asp-route-userId="@user.Id" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <label for="newRole">Change Role:</label>
+                                <select name="newRole">
+                                    <option value="admin">Admin</option>
+                                    <option value="user">User</option>
+                                </select>
+                                <button type="submit">Change</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
     </div>
-
-   
-    <a class="link btn btn-primary d-grid mb-5" asp-controller="Admin" asp-action="Index">Back to admin dashboard</a>
+    <a class="link btn btn-primary d-grid mt-5" asp-controller="Admin" asp-action="Index">Back to admin dashboard</a>
 </div>
-
-
-   
-   

@@ -2,7 +2,29 @@
     ViewData["Title"] = User.Identity?.Name;
 }
 
-<h3>THIS ACCOUNT BELONGS TO</h3>
-<div>
-    <h1>@User.Identity?.Name</h1>
+
+<div class="container d-flex justify-content-center">
+    <div>
+    <h2 class="title">Hello @User.Identity?.Name! Welcome to your account page!</h2>
+    <div class="">
+            <div class="btn-group m-5" role="group" aria-label="Basic example">
+                <a class="link btn btn-success" asp-controller="Account" asp-action="Index">Show recommendations</a>
+                <a class="link btn btn-success" asp-controller="Account" asp-action="Index">See what's new!</a>
+                <a class="link btn btn-success" asp-controller="Account" asp-action="Index">Manage orders</a>
+            </div>
+
+
+            <div class="btn-group m-5" role="group" aria-label="Basic example">
+                <a class="link btn btn-info" asp-controller="Account" asp-action="Index">Your order history</a>
+                <a class="link btn btn-info" asp-controller="Account" asp-action="Index">Manage account</a>
+                <a class="link btn btn-info" asp-controller="Account" asp-action="Index">Settings</a>
+            </div>
+    
+    </div>
+    </div>
 </div>
+
+
+
+
+
